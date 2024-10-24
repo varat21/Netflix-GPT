@@ -1,6 +1,16 @@
 #Netflix GPT
 -create React App
 -Configured TailwindCSS
+-Header
+-Routing of App
+-Login Form
+-Sign Up Form
+-Form Validation
+-useRef Hook 
+-FireBase set Up
+-Deploying our app to production
+-create user account
+-created userSlice with redux tool kit
 
 # Features
 -Login/Sign Up
@@ -16,3 +26,8 @@
 -NetflixGPT
   -search Bar
   -Movie Suggestion
+
+
+# Form Validation
+  -regex
+
