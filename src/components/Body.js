@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 // import { auth } from "./fireBase";
 import {auth} from '../utils/fireBase'
 import { addUser,removeUser } from "../utils/userSlice";
+import Header from "./Header";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/browser",
     element: <Browser />,
+  },
+  {
+    path: "/header",
+    element: <Header />,
   },
  
 ]);
@@ -26,8 +31,8 @@ const Body = () => {
 onAuthStateChanged(auth,(user)=>{
   if (user) {
     // user signIn
-    const{uid, email, displayName} = user;
-    dispatch(addUser({uid:uid, email:email, displayName:displayName}));
+    const{uid, email, displayName,photoURL} = user;
+    dispatch(addUser({uid:uid, email:email, displayName:displayName,photoURL}));
 
 
 }else{

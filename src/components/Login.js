@@ -196,9 +196,11 @@ import Header from "./Header";
 import { FiLoader } from "react-icons/fi";
 import { useRef, useState } from "react";
 import { ValidateData } from "../utils/validate";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../utils/fireBase";
 import { useNavigate } from "react-router-dom";
+import { addUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
 const Login = () => {
   const navigate = useNavigate();
   
@@ -210,6 +212,7 @@ const Login = () => {
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+  const dispatch = useDispatch();
 
   // Form Validation and submission logic
   const handleForm = async () => {
@@ -244,10 +247,22 @@ const Login = () => {
   
       // You can also access user data here for further use
       const user = userCredential.user;
-      console.log("User data:", user); // Log the user object
+      updateProfile(user,{
+        displayName:name.current.value,
+        photoURL:"https://avatars.githubusercontent.com/u/19389497?v=4"
+
+      })
+      .then(()=>{
+        const{uid, email, displayName,photoURL} = auth.currentUser ;
+        dispatch(
+          addUser({uid:uid, email:email, displayName:displayName,photoURL}));
+        navigate('/browser');    
+      })
+     
+
     } catch (error) {
       // Set error message if sign in or sign up fails
-      setErrorMessage(error.code + " - " + error.message);
+      setErrorMessage(error.message);
     } finally {
       setIsLoading(false); // Stop loading after the process is done
     }
